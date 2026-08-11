@@ -1185,27 +1185,17 @@ document.addEventListener(
    SCROLL 3D PARALLAX
 ========================================== */
 
-window.addEventListener(
-    "scroll",
-    () => {
+window.addEventListener("scroll", () => {
 
-        if (
-            document.body.classList.contains(
-                "no-3d"
-            )
-        ) return;
+    if (document.body.classList.contains("no-3d")) return;
 
-        const sphere =
-            document.querySelector(
-                ".wire-sphere"
-            );
+    const sphere = document.querySelector(".wire-sphere");
 
-        if (sphere) {
+    if (sphere) {
+        const y = window.scrollY;
 
-            const y =
-                window.scrollY;
+        sphere.style.transform =
+            `rotateY(${y * 0.12}deg) rotateX(${Math.sin(y * 0.01) * 8}deg)`;
+    }
 
-            sphere.style.transform =
-                `
-                rotateY(${y * .12}deg)
-               
+});
