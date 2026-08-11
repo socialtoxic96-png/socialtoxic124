@@ -1,26 +1,33 @@
-// =====================================================
-// SOCIAL TOXIC
-// CLEAN LOGIN + SIGNUP SYSTEM
-// =====================================================
+```javascript
+// ======================================================
+// SOCIAL TOXIC LOGIN SYSTEM
+// ======================================================
 
 const ACCOUNTS_KEY = "socialToxicAccounts";
 const CURRENT_USER_KEY = "socialToxicCurrentUser";
 
-// =====================================================
+// ======================================================
 // STORAGE
-// =====================================================
+// ======================================================
 
 function getAccounts() {
+
+    const data =
+        localStorage.getItem(ACCOUNTS_KEY);
+
+    if (!data) {
+        return [];
+    }
+
     try {
-        return JSON.parse(
-            localStorage.getItem(ACCOUNTS_KEY)
-        ) || [];
-    } catch (error) {
+        return JSON.parse(data);
+    } catch {
         return [];
     }
 }
 
 function saveAccounts(accounts) {
+
     localStorage.setItem(
         ACCOUNTS_KEY,
         JSON.stringify(accounts)
@@ -28,126 +35,179 @@ function saveAccounts(accounts) {
 }
 
 function getCurrentUser() {
+
+    const data =
+        localStorage.getItem(CURRENT_USER_KEY);
+
+    if (!data) {
+        return null;
+    }
+
     try {
-        return JSON.parse(
-            localStorage.getItem(CURRENT_USER_KEY)
-        );
-    } catch (error) {
+        return JSON.parse(data);
+    } catch {
         return null;
     }
 }
 
-// =====================================================
-// AUTH PAGE CHECK
-// =====================================================
+// ======================================================
+// PAGE PROTECTION
+// ======================================================
 
-function isAuthPage() {
-    return window.location.pathname.endsWith("auth.html");
-}
-
-function checkLogin() {
+function checkPage() {
 
     const user = getCurrentUser();
 
-    if (isAuthPage()) {
+    const page =
+        window.location.pathname
+            .split("/")
+            .pop()
+            .toLowerCase();
+
+    // LOGIN PAGE
+    if (page === "auth.html") {
 
         if (user) {
-            window.location.replace("index.html");
+
+            window.location.replace(
+                "index.html"
+            );
+
         }
 
         return;
     }
 
+    // REAL WEBSITE
     if (!user) {
-        window.location.replace("auth.html");
+
+        window.location.replace(
+            "auth.html"
+        );
+
+        return;
     }
 }
 
-checkLogin();
+checkPage();
 
-// =====================================================
-// LOGIN / SIGNUP SWITCH
-// =====================================================
+
+// ======================================================
+// SWITCH LOGIN / SIGNUP
+// ======================================================
 
 function showLogin() {
 
-    const loginPanel =
-        document.getElementById("loginPanel");
+    const login =
+        document.getElementById(
+            "loginPanel"
+        );
 
-    const signupPanel =
-        document.getElementById("signupPanel");
+    const signup =
+        document.getElementById(
+            "signupPanel"
+        );
 
-    if (loginPanel) {
-        loginPanel.classList.add("active");
+    if (login) {
+        login.classList.add("active");
     }
 
-    if (signupPanel) {
-        signupPanel.classList.remove("active");
+    if (signup) {
+        signup.classList.remove("active");
     }
+
+    clearMessages();
 }
+
 
 function showSignup() {
 
-    const loginPanel =
-        document.getElementById("loginPanel");
+    const login =
+        document.getElementById(
+            "loginPanel"
+        );
 
-    const signupPanel =
-        document.getElementById("signupPanel");
+    const signup =
+        document.getElementById(
+            "signupPanel"
+        );
 
-    if (loginPanel) {
-        loginPanel.classList.remove("active");
+    if (login) {
+        login.classList.remove("active");
     }
 
-    if (signupPanel) {
-        signupPanel.classList.add("active");
+    if (signup) {
+        signup.classList.add("active");
+    }
+
+    clearMessages();
+}
+
+
+function clearMessages() {
+
+    const loginMessage =
+        document.getElementById(
+            "loginMessage"
+        );
+
+    const signupMessage =
+        document.getElementById(
+            "signupMessage"
+        );
+
+    if (loginMessage) {
+        loginMessage.textContent = "";
+    }
+
+    if (signupMessage) {
+        signupMessage.textContent = "";
     }
 }
 
-// =====================================================
-// PASSWORD SHOW / HIDE
-// =====================================================
 
-function togglePassword(id) {
-
-    const input =
-        document.getElementById(id);
-
-    if (!input) return;
-
-    if (input.type === "password") {
-        input.type = "text";
-    } else {
-        input.type = "password";
-    }
-}
-
-// =====================================================
+// ======================================================
 // AVATAR
-// =====================================================
+// ======================================================
 
 document
     .querySelectorAll(".avatar-choice")
     .forEach(button => {
 
-        button.addEventListener("click", () => {
+        button.addEventListener(
+            "click",
+            function() {
 
-            document
-                .querySelectorAll(".avatar-choice")
-                .forEach(item => {
-                    item.classList.remove("selected");
-                });
+                document
+                    .querySelectorAll(
+                        ".avatar-choice"
+                    )
+                    .forEach(item => {
 
-            button.classList.add("selected");
-        });
+                        item.classList.remove(
+                            "selected"
+                        );
+
+                    });
+
+                this.classList.add(
+                    "selected"
+                );
+
+            }
+        );
 
     });
 
-// =====================================================
+
+// ======================================================
 // SIGN UP
-// =====================================================
+// ======================================================
 
 const signupForm =
-    document.getElementById("signupForm");
+    document.getElementById(
+        "signupForm"
+    );
 
 if (signupForm) {
 
@@ -159,30 +219,42 @@ if (signupForm) {
 
             const username =
                 document
-                    .getElementById("signupUsername")
+                    .getElementById(
+                        "signupUsername"
+                    )
                     .value
                     .trim();
 
             const email =
                 document
-                    .getElementById("signupEmail")
+                    .getElementById(
+                        "signupEmail"
+                    )
                     .value
                     .trim()
                     .toLowerCase();
 
             const password =
                 document
-                    .getElementById("signupPassword")
+                    .getElementById(
+                        "signupPassword"
+                    )
                     .value;
 
             const message =
-                document.getElementById("signupMessage");
+                document.getElementById(
+                    "signupMessage"
+                );
 
             const accounts =
                 getAccounts();
 
-            // USERNAME
-            if (!/^[a-zA-Z0-9_]{3,20}$/.test(username)) {
+
+            // CHECK USERNAME
+            if (
+                !/^[a-zA-Z0-9_]{3,20}$/
+                    .test(username)
+            ) {
 
                 message.textContent =
                     "Username must be 3-20 characters.";
@@ -193,7 +265,8 @@ if (signupForm) {
                 return;
             }
 
-            // PASSWORD
+
+            // CHECK PASSWORD
             if (password.length < 6) {
 
                 message.textContent =
@@ -205,7 +278,8 @@ if (signupForm) {
                 return;
             }
 
-            // DUPLICATE EMAIL
+
+            // CHECK EMAIL
             if (
                 accounts.some(
                     account =>
@@ -222,11 +296,13 @@ if (signupForm) {
                 return;
             }
 
-            // DUPLICATE USERNAME
+
+            // CHECK USERNAME
             if (
                 accounts.some(
                     account =>
-                        account.username.toLowerCase() ===
+                        account.username
+                            .toLowerCase() ===
                         username.toLowerCase()
                 )
             ) {
@@ -240,19 +316,21 @@ if (signupForm) {
                 return;
             }
 
+
             // AVATAR
-            const selectedAvatar =
+            const selected =
                 document.querySelector(
                     ".avatar-choice.selected"
                 );
 
             const avatar =
-                selectedAvatar
-                    ? selectedAvatar.dataset.avatar
+                selected
+                    ? selected.dataset.avatar
                     : "ST";
 
-            // CREATE ACCOUNT
-            const newUser = {
+
+            // CREATE USER
+            const user = {
 
                 id: Date.now(),
 
@@ -266,7 +344,8 @@ if (signupForm) {
 
                 avatar: avatar,
 
-                bio: "Welcome to Social Toxic.",
+                bio:
+                    "Welcome to Social Toxic.",
 
                 followers: 0,
 
@@ -275,40 +354,63 @@ if (signupForm) {
                 posts: 0
             };
 
+
             // SAVE ACCOUNT
-            accounts.push(newUser);
+            accounts.push(user);
 
             saveAccounts(accounts);
 
-            // SAVE LOGIN
-            localStorage.setItem(
-                CURRENT_USER_KEY,
-                JSON.stringify(newUser)
-            );
+
+            // IMPORTANT:
+            // DO NOT LOGIN AUTOMATICALLY.
+            // USER MUST LOGIN AFTER SIGNUP.
 
             message.textContent =
-                "Account created successfully!";
+                "Account created! Please login.";
 
             message.className =
                 "auth-message success";
 
-            // GO HOME
-            setTimeout(() => {
 
-                window.location.href =
-                    "index.html";
+            // CLEAR SIGNUP FORM
+            signupForm.reset();
 
-            }, 800);
+
+            // GO TO LOGIN
+            setTimeout(
+                function() {
+
+                    showLogin();
+
+                    const loginEmail =
+                        document.getElementById(
+                            "loginEmail"
+                        );
+
+                    if (loginEmail) {
+
+                        loginEmail.value =
+                            email;
+
+                    }
+
+                },
+                800
+            );
+
         }
     );
 }
 
-// =====================================================
+
+// ======================================================
 // LOGIN
-// =====================================================
+// ======================================================
 
 const loginForm =
-    document.getElementById("loginForm");
+    document.getElementById(
+        "loginForm"
+    );
 
 if (loginForm) {
 
@@ -318,34 +420,48 @@ if (loginForm) {
 
             event.preventDefault();
 
+
             const email =
                 document
-                    .getElementById("loginEmail")
+                    .getElementById(
+                        "loginEmail"
+                    )
                     .value
                     .trim()
                     .toLowerCase();
 
             const password =
                 document
-                    .getElementById("loginPassword")
+                    .getElementById(
+                        "loginPassword"
+                    )
                     .value;
 
+
             const message =
-                document.getElementById("loginMessage");
+                document.getElementById(
+                    "loginMessage"
+                );
+
 
             const accounts =
                 getAccounts();
 
+
+            // FIND USER
             const user =
-                accounts.find(account =>
-                    account.email === email &&
-                    account.password === password
+                accounts.find(
+                    account =>
+                        account.email === email &&
+                        account.password === password
                 );
 
+
+            // WRONG LOGIN
             if (!user) {
 
                 message.textContent =
-                    "Incorrect email or password.";
+                    "Wrong email or password.";
 
                 message.className =
                     "auth-message error";
@@ -353,11 +469,13 @@ if (loginForm) {
                 return;
             }
 
-            // SAVE CURRENT USER
+
+            // SAVE CURRENT LOGIN
             localStorage.setItem(
                 CURRENT_USER_KEY,
                 JSON.stringify(user)
             );
+
 
             message.textContent =
                 "Login successful!";
@@ -365,20 +483,27 @@ if (loginForm) {
             message.className =
                 "auth-message success";
 
-            // GO HOME
-            setTimeout(() => {
 
-                window.location.href =
-                    "index.html";
+            // GO TO REAL WEBSITE
+            setTimeout(
+                function() {
 
-            }, 500);
+                    window.location.replace(
+                        "index.html"
+                    );
+
+                },
+                500
+            );
+
         }
     );
 }
 
-// =====================================================
+
+// ======================================================
 // LOGOUT
-// =====================================================
+// ======================================================
 
 function logout() {
 
@@ -386,471 +511,91 @@ function logout() {
         CURRENT_USER_KEY
     );
 
-    window.location.href =
-        "auth.html";
+    window.location.replace(
+        "auth.html"
+    );
 }
 
-// =====================================================
-// NAVIGATION USER NAME
-// =====================================================
 
-function updateUserName() {
+// ======================================================
+// DISPLAY USER
+// ======================================================
+
+function displayUser() {
 
     const user =
         getCurrentUser();
 
-    const navUser =
-        document.getElementById("navUser");
-
-    if (!navUser) return;
-
-    if (user) {
-
-        navUser.textContent =
-            "@" + user.username;
-
-    } else {
-
-        navUser.textContent =
-            "Guest";
-
-    }
-}
-
-updateUserName();
-
-// =====================================================
-// PROFILE
-// =====================================================
-
-function loadProfile() {
-
-    const user =
-        getCurrentUser();
-
-    if (!user) return;
-
-    const profileName =
-        document.getElementById("profileName");
-
-    const profileUsername =
-        document.getElementById("profileUsername");
-
-    const profileBio =
-        document.getElementById("profileBio");
-
-    const profileAvatar =
-        document.getElementById("profileAvatar");
-
-    const profilePosts =
-        document.getElementById("profilePosts");
-
-    if (profileName) {
-        profileName.textContent =
-            user.name || user.username;
+    if (!user) {
+        return;
     }
 
-    if (profileUsername) {
-        profileUsername.textContent =
-            "@" + user.username;
-    }
-
-    if (profileBio) {
-        profileBio.textContent =
-            user.bio || "Welcome to Social Toxic.";
-    }
-
-    if (profileAvatar) {
-        profileAvatar.textContent =
-            user.avatar || "ST";
-    }
-
-    if (profilePosts) {
-        profilePosts.textContent =
-            user.posts || 0;
-    }
-}
-
-loadProfile();
-
-// =====================================================
-// EDIT PROFILE
-// =====================================================
-
-function openEditProfile() {
-
-    const modal =
-        document.getElementById("editModal");
-
-    const user =
-        getCurrentUser();
-
-    if (!modal || !user) return;
-
-    const name =
-        document.getElementById("editName");
 
     const username =
-        document.getElementById("editUsername");
-
-    const bio =
-        document.getElementById("editBio");
-
-    const avatar =
-        document.getElementById("editAvatar");
-
-    if (name) {
-        name.value =
-            user.name || user.username;
-    }
+        document.getElementById(
+            "navUser"
+        );
 
     if (username) {
-        username.value =
-            user.username;
+
+        username.textContent =
+            "@" + user.username;
+
     }
 
-    if (bio) {
-        bio.value =
-            user.bio || "";
-    }
 
-    if (avatar) {
-        avatar.value =
-            user.avatar || "ST";
-    }
-
-    modal.classList.add("show");
-}
-
-function saveProfile() {
-
-    const user =
-        getCurrentUser();
-
-    if (!user) return;
-
-    const name =
-        document
-            .getElementById("editName")
-            .value
-            .trim();
-
-    const username =
-        document
-            .getElementById("editUsername")
-            .value
-            .trim();
-
-    const bio =
-        document
-            .getElementById("editBio")
-            .value
-            .trim();
-
-    const avatar =
-        document
-            .getElementById("editAvatar")
-            .value
-            .trim()
-            .substring(0, 2)
-            .toUpperCase();
-
-    if (!name) {
-        alert("Please enter your name.");
-        return;
-    }
-
-    if (!/^[a-zA-Z0-9_]{3,20}$/.test(username)) {
-        alert("Username must be 3-20 characters.");
-        return;
-    }
-
-    const accounts =
-        getAccounts();
-
-    const duplicate =
-        accounts.some(account =>
-            account.id !== user.id &&
-            account.username.toLowerCase() ===
-            username.toLowerCase()
+    const profileName =
+        document.getElementById(
+            "profileName"
         );
 
-    if (duplicate) {
-        alert("Username already exists.");
-        return;
+    if (profileName) {
+
+        profileName.textContent =
+            user.name;
+
     }
 
-    user.name = name;
 
-    user.username = username;
-
-    user.bio =
-        bio || "Welcome to Social Toxic.";
-
-    user.avatar =
-        avatar || "ST";
-
-    const index =
-        accounts.findIndex(
-            account =>
-                account.id === user.id
+    const profileUsername =
+        document.getElementById(
+            "profileUsername"
         );
 
-    if (index !== -1) {
-        accounts[index] = user;
+    if (profileUsername) {
+
+        profileUsername.textContent =
+            "@" + user.username;
+
     }
 
-    saveAccounts(accounts);
 
-    localStorage.setItem(
-        CURRENT_USER_KEY,
-        JSON.stringify(user)
-    );
-
-    closeModal("editModal");
-
-    loadProfile();
-
-    updateUserName();
-}
-
-// =====================================================
-// MODALS
-// =====================================================
-
-function openSettings() {
-
-    const modal =
-        document.getElementById("settingsModal");
-
-    if (modal) {
-        modal.classList.add("show");
-    }
-}
-
-function closeModal(id) {
-
-    const modal =
-        document.getElementById(id);
-
-    if (modal) {
-        modal.classList.remove("show");
-    }
-}
-
-// =====================================================
-// SETTINGS
-// =====================================================
-
-function toggleNeon() {
-
-    document.body.classList.toggle(
-        "no-neon"
-    );
-}
-
-function toggle3D() {
-
-    document.body.classList.toggle(
-        "no-3d"
-    );
-}
-
-function resetAccount() {
-
-    const confirmDelete =
-        confirm(
-            "Delete your Social Toxic account?"
+    const profileBio =
+        document.getElementById(
+            "profileBio"
         );
 
-    if (!confirmDelete) return;
+    if (profileBio) {
 
-    localStorage.removeItem(
-        ACCOUNTS_KEY
-    );
+        profileBio.textContent =
+            user.bio;
 
-    localStorage.removeItem(
-        CURRENT_USER_KEY
-    );
-
-    window.location.href =
-        "auth.html";
-}
-
-// =====================================================
-// COMMUNITY / POST
-// =====================================================
-
-function createPost() {
-
-    const textInput =
-        document.getElementById("postText");
-
-    const status =
-        document.getElementById("postStatus");
-
-    if (!textInput) return;
-
-    const text =
-        textInput.value.trim();
-
-    if (!text) {
-
-        if (status) {
-            status.textContent =
-                "Write something first.";
-        }
-
-        return;
     }
 
-    const user =
-        getCurrentUser();
 
-    const postsContainer =
-        document.getElementById("postsContainer");
-
-    if (postsContainer) {
-
-        const post =
-            document.createElement("div");
-
-        post.className =
-            "post";
-
-        post.innerHTML = `
-            <strong>
-                @${user ? user.username : "guest"}
-            </strong>
-            <p>${escapeHTML(text)}</p>
-        `;
-
-        postsContainer.prepend(post);
-    }
-
-    textInput.value = "";
-
-    if (status) {
-        status.textContent =
-            "Post published!";
-    }
-
-    if (user) {
-
-        const accounts =
-            getAccounts();
-
-        const index =
-            accounts.findIndex(
-                account =>
-                    account.id === user.id
-            );
-
-        if (index !== -1) {
-
-            accounts[index].posts =
-                (accounts[index].posts || 0) + 1;
-
-            saveAccounts(accounts);
-
-            user.posts =
-                accounts[index].posts;
-
-            localStorage.setItem(
-                CURRENT_USER_KEY,
-                JSON.stringify(user)
-            );
-        }
-    }
-}
-
-// Prevent HTML injection in posts
-function escapeHTML(text) {
-
-    const div =
-        document.createElement("div");
-
-    div.textContent =
-        text;
-
-    return div.innerHTML;
-}
-
-// =====================================================
-// 3D EFFECT
-// =====================================================
-
-document
-    .querySelectorAll(
-        ".glass-card, .trend-card, .post, .feature-card, .tilt"
-    )
-    .forEach(card => {
-
-        card.addEventListener(
-            "mousemove",
-            event => {
-
-                const rect =
-                    card.getBoundingClientRect();
-
-                const x =
-                    event.clientX - rect.left;
-
-                const y =
-                    event.clientY - rect.top;
-
-                const centerX =
-                    rect.width / 2;
-
-                const centerY =
-                    rect.height / 2;
-
-                const rotateX =
-                    ((y - centerY) / centerY) * -5;
-
-                const rotateY =
-                    ((x - centerX) / centerX) * 5;
-
-                card.style.transform =
-                    `perspective(800px)
-                     rotateX(${rotateX}deg)
-                     rotateY(${rotateY}deg)
-                     translateY(-5px)`;
-            }
+    const profileAvatar =
+        document.getElementById(
+            "profileAvatar"
         );
 
-        card.addEventListener(
-            "mouseleave",
-            () => {
-                card.style.transform = "";
-            }
-        );
+    if (profileAvatar) {
 
-    });
-
-// =====================================================
-// KEYBOARD SCROLL
-// =====================================================
-
-document.addEventListener(
-    "keydown",
-    event => {
-
-        if (event.key === "ArrowDown") {
-
-            window.scrollBy({
-                top: 500,
-                behavior: "smooth"
-            });
-        }
-
-        if (event.key === "ArrowUp") {
-
-            window.scrollBy({
-                top: -500,
-                behavior: "smooth"
-            });
-        }
+        profileAvatar.textContent =
+            user.avatar;
 
     }
-);
+
+}
+
+displayUser();
+```
