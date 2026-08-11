@@ -1,30 +1,31 @@
-```javascript
-// ======================================================
-// SOCIAL TOXIC LOGIN SYSTEM
-// ======================================================
+// =====================================================
+// SOCIAL TOXIC - MAIN SYSTEM
+// LOGIN + SIGNUP + LOADER + PAGE PROTECTION
+// =====================================================
 
 const ACCOUNTS_KEY = "socialToxicAccounts";
 const CURRENT_USER_KEY = "socialToxicCurrentUser";
 
-// ======================================================
+
+// =====================================================
 // STORAGE
-// ======================================================
+// =====================================================
 
 function getAccounts() {
 
-    const data =
-        localStorage.getItem(ACCOUNTS_KEY);
-
-    if (!data) {
-        return [];
-    }
-
     try {
-        return JSON.parse(data);
-    } catch {
+
+        return JSON.parse(
+            localStorage.getItem(ACCOUNTS_KEY)
+        ) || [];
+
+    } catch (error) {
+
         return [];
+
     }
 }
+
 
 function saveAccounts(accounts) {
 
@@ -32,31 +33,69 @@ function saveAccounts(accounts) {
         ACCOUNTS_KEY,
         JSON.stringify(accounts)
     );
+
 }
+
 
 function getCurrentUser() {
 
-    const data =
-        localStorage.getItem(CURRENT_USER_KEY);
-
-    if (!data) {
-        return null;
-    }
-
     try {
-        return JSON.parse(data);
-    } catch {
+
+        return JSON.parse(
+            localStorage.getItem(CURRENT_USER_KEY)
+        ) || null;
+
+    } catch (error) {
+
         return null;
+
     }
+
 }
 
-// ======================================================
+
+// =====================================================
+// LOADER
+// =====================================================
+
+function hideLoader() {
+
+    const loader =
+        document.getElementById("loader");
+
+    if (!loader) return;
+
+    setTimeout(() => {
+
+        loader.classList.add("hide");
+
+    }, 800);
+
+}
+
+
+if (document.readyState === "loading") {
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        hideLoader
+    );
+
+} else {
+
+    hideLoader();
+
+}
+
+
+// =====================================================
 // PAGE PROTECTION
-// ======================================================
+// =====================================================
 
-function checkPage() {
+function checkAuthentication() {
 
-    const user = getCurrentUser();
+    const user =
+        getCurrentUser();
 
     const page =
         window.location.pathname
@@ -64,7 +103,8 @@ function checkPage() {
             .pop()
             .toLowerCase();
 
-    // LOGIN PAGE
+
+    // AUTH PAGE
     if (page === "auth.html") {
 
         if (user) {
@@ -76,9 +116,11 @@ function checkPage() {
         }
 
         return;
+
     }
 
-    // REAL WEBSITE
+
+    // MAIN WEBSITE
     if (!user) {
 
         window.location.replace(
@@ -86,15 +128,18 @@ function checkPage() {
         );
 
         return;
+
     }
+
 }
 
-checkPage();
+
+checkAuthentication();
 
 
-// ======================================================
-// SWITCH LOGIN / SIGNUP
-// ======================================================
+// =====================================================
+// LOGIN / SIGNUP SWITCH
+// =====================================================
 
 function showLogin() {
 
@@ -108,15 +153,26 @@ function showLogin() {
             "signupPanel"
         );
 
+
     if (login) {
-        login.classList.add("active");
+
+        login.classList.add(
+            "active"
+        );
+
     }
 
+
     if (signup) {
-        signup.classList.remove("active");
+
+        signup.classList.remove(
+            "active"
+        );
+
     }
 
     clearMessages();
+
 }
 
 
@@ -132,15 +188,26 @@ function showSignup() {
             "signupPanel"
         );
 
+
     if (login) {
-        login.classList.remove("active");
+
+        login.classList.remove(
+            "active"
+        );
+
     }
 
+
     if (signup) {
-        signup.classList.add("active");
+
+        signup.classList.add(
+            "active"
+        );
+
     }
 
     clearMessages();
+
 }
 
 
@@ -156,19 +223,46 @@ function clearMessages() {
             "signupMessage"
         );
 
+
     if (loginMessage) {
+
         loginMessage.textContent = "";
+
     }
 
+
     if (signupMessage) {
+
         signupMessage.textContent = "";
+
     }
+
 }
 
 
-// ======================================================
+function showMessage(
+    id,
+    text,
+    type
+) {
+
+    const element =
+        document.getElementById(id);
+
+    if (!element) return;
+
+    element.textContent =
+        text;
+
+    element.className =
+        "auth-message " + type;
+
+}
+
+
+// =====================================================
 // AVATAR
-// ======================================================
+// =====================================================
 
 document
     .querySelectorAll(".avatar-choice")
@@ -176,7 +270,7 @@ document
 
         button.addEventListener(
             "click",
-            function() {
+            () => {
 
                 document
                     .querySelectorAll(
@@ -190,7 +284,8 @@ document
 
                     });
 
-                this.classList.add(
+
+                button.classList.add(
                     "selected"
                 );
 
@@ -200,22 +295,24 @@ document
     });
 
 
-// ======================================================
+// =====================================================
 // SIGN UP
-// ======================================================
+// =====================================================
 
 const signupForm =
     document.getElementById(
         "signupForm"
     );
 
+
 if (signupForm) {
 
     signupForm.addEventListener(
         "submit",
-        function(event) {
+        event => {
 
             event.preventDefault();
+
 
             const username =
                 document
@@ -224,6 +321,7 @@ if (signupForm) {
                     )
                     .value
                     .trim();
+
 
             const email =
                 document
@@ -234,6 +332,7 @@ if (signupForm) {
                     .trim()
                     .toLowerCase();
 
+
             const password =
                 document
                     .getElementById(
@@ -241,45 +340,43 @@ if (signupForm) {
                     )
                     .value;
 
-            const message =
-                document.getElementById(
-                    "signupMessage"
-                );
 
             const accounts =
                 getAccounts();
 
 
-            // CHECK USERNAME
+            // USERNAME
             if (
                 !/^[a-zA-Z0-9_]{3,20}$/
                     .test(username)
             ) {
 
-                message.textContent =
-                    "Username must be 3-20 characters.";
-
-                message.className =
-                    "auth-message error";
+                showMessage(
+                    "signupMessage",
+                    "Username must be 3-20 characters.",
+                    "error"
+                );
 
                 return;
+
             }
 
 
-            // CHECK PASSWORD
+            // PASSWORD
             if (password.length < 6) {
 
-                message.textContent =
-                    "Password must be at least 6 characters.";
-
-                message.className =
-                    "auth-message error";
+                showMessage(
+                    "signupMessage",
+                    "Password must be at least 6 characters.",
+                    "error"
+                );
 
                 return;
+
             }
 
 
-            // CHECK EMAIL
+            // EMAIL
             if (
                 accounts.some(
                     account =>
@@ -287,17 +384,18 @@ if (signupForm) {
                 )
             ) {
 
-                message.textContent =
-                    "This email is already registered.";
-
-                message.className =
-                    "auth-message error";
+                showMessage(
+                    "signupMessage",
+                    "This email is already registered.",
+                    "error"
+                );
 
                 return;
+
             }
 
 
-            // CHECK USERNAME
+            // USERNAME
             if (
                 accounts.some(
                     account =>
@@ -307,30 +405,32 @@ if (signupForm) {
                 )
             ) {
 
-                message.textContent =
-                    "This username is already taken.";
-
-                message.className =
-                    "auth-message error";
+                showMessage(
+                    "signupMessage",
+                    "This username is already taken.",
+                    "error"
+                );
 
                 return;
+
             }
 
 
             // AVATAR
-            const selected =
+            const selectedAvatar =
                 document.querySelector(
                     ".avatar-choice.selected"
                 );
 
+
             const avatar =
-                selected
-                    ? selected.dataset.avatar
+                selectedAvatar
+                    ? selectedAvatar.dataset.avatar
                     : "ST";
 
 
             // CREATE USER
-            const user = {
+            const newUser = {
 
                 id: Date.now(),
 
@@ -352,40 +452,44 @@ if (signupForm) {
                 following: 0,
 
                 posts: 0
+
             };
 
 
-            // SAVE ACCOUNT
-            accounts.push(user);
+            // SAVE
+            accounts.push(
+                newUser
+            );
 
-            saveAccounts(accounts);
-
-
-            // IMPORTANT:
-            // DO NOT LOGIN AUTOMATICALLY.
-            // USER MUST LOGIN AFTER SIGNUP.
-
-            message.textContent =
-                "Account created! Please login.";
-
-            message.className =
-                "auth-message success";
+            saveAccounts(
+                accounts
+            );
 
 
-            // CLEAR SIGNUP FORM
+            // DO NOT LOGIN YET
+            showMessage(
+                "signupMessage",
+                "Account created! Please login.",
+                "success"
+            );
+
+
+            // CLEAR FORM
             signupForm.reset();
 
 
             // GO TO LOGIN
             setTimeout(
-                function() {
+                () => {
 
                     showLogin();
+
 
                     const loginEmail =
                         document.getElementById(
                             "loginEmail"
                         );
+
 
                     if (loginEmail) {
 
@@ -400,23 +504,25 @@ if (signupForm) {
 
         }
     );
+
 }
 
 
-// ======================================================
+// =====================================================
 // LOGIN
-// ======================================================
+// =====================================================
 
 const loginForm =
     document.getElementById(
         "loginForm"
     );
 
+
 if (loginForm) {
 
     loginForm.addEventListener(
         "submit",
-        function(event) {
+        event => {
 
             event.preventDefault();
 
@@ -430,6 +536,7 @@ if (loginForm) {
                     .trim()
                     .toLowerCase();
 
+
             const password =
                 document
                     .getElementById(
@@ -438,17 +545,10 @@ if (loginForm) {
                     .value;
 
 
-            const message =
-                document.getElementById(
-                    "loginMessage"
-                );
-
-
             const accounts =
                 getAccounts();
 
 
-            // FIND USER
             const user =
                 accounts.find(
                     account =>
@@ -457,36 +557,36 @@ if (loginForm) {
                 );
 
 
-            // WRONG LOGIN
             if (!user) {
 
-                message.textContent =
-                    "Wrong email or password.";
-
-                message.className =
-                    "auth-message error";
+                showMessage(
+                    "loginMessage",
+                    "Incorrect email or password.",
+                    "error"
+                );
 
                 return;
+
             }
 
 
-            // SAVE CURRENT LOGIN
+            // SAVE CURRENT USER
             localStorage.setItem(
                 CURRENT_USER_KEY,
                 JSON.stringify(user)
             );
 
 
-            message.textContent =
-                "Login successful!";
+            showMessage(
+                "loginMessage",
+                "Login successful! Opening Social Toxic...",
+                "success"
+            );
 
-            message.className =
-                "auth-message success";
 
-
-            // GO TO REAL WEBSITE
+            // REAL WEBSITE
             setTimeout(
-                function() {
+                () => {
 
                     window.location.replace(
                         "index.html"
@@ -498,12 +598,13 @@ if (loginForm) {
 
         }
     );
+
 }
 
 
-// ======================================================
+// =====================================================
 // LOGOUT
-// ======================================================
+// =====================================================
 
 function logout() {
 
@@ -511,34 +612,35 @@ function logout() {
         CURRENT_USER_KEY
     );
 
+
     window.location.replace(
         "auth.html"
     );
+
 }
 
 
-// ======================================================
-// DISPLAY USER
-// ======================================================
+// =====================================================
+// SHOW USERNAME
+// =====================================================
 
-function displayUser() {
+function showUser() {
 
     const user =
         getCurrentUser();
 
-    if (!user) {
-        return;
-    }
+    if (!user) return;
 
 
-    const username =
+    const navUser =
         document.getElementById(
             "navUser"
         );
 
-    if (username) {
 
-        username.textContent =
+    if (navUser) {
+
+        navUser.textContent =
             "@" + user.username;
 
     }
@@ -549,10 +651,12 @@ function displayUser() {
             "profileName"
         );
 
+
     if (profileName) {
 
         profileName.textContent =
-            user.name;
+            user.name ||
+            user.username;
 
     }
 
@@ -561,6 +665,7 @@ function displayUser() {
         document.getElementById(
             "profileUsername"
         );
+
 
     if (profileUsername) {
 
@@ -575,10 +680,12 @@ function displayUser() {
             "profileBio"
         );
 
+
     if (profileBio) {
 
         profileBio.textContent =
-            user.bio;
+            user.bio ||
+            "Welcome to Social Toxic.";
 
     }
 
@@ -588,14 +695,67 @@ function displayUser() {
             "profileAvatar"
         );
 
+
     if (profileAvatar) {
 
         profileAvatar.textContent =
-            user.avatar;
+            user.avatar ||
+            "ST";
 
     }
 
 }
 
-displayUser();
-```
+
+showUser();
+
+
+// =====================================================
+// PASSWORD SHOW / HIDE
+// =====================================================
+
+function togglePassword(id) {
+
+    const input =
+        document.getElementById(id);
+
+    if (!input) return;
+
+
+    input.type =
+        input.type === "password"
+            ? "text"
+            : "password";
+
+}
+
+
+// =====================================================
+// KEYBOARD SCROLL
+// =====================================================
+
+document.addEventListener(
+    "keydown",
+    event => {
+
+        if (event.key === "ArrowDown") {
+
+            window.scrollBy({
+                top: 500,
+                behavior: "smooth"
+            });
+
+        }
+
+
+        if (event.key === "ArrowUp") {
+
+            window.scrollBy({
+                top: -500,
+                behavior: "smooth"
+            });
+
+        }
+
+    }
+);
