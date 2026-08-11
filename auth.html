@@ -13,14 +13,9 @@
 
 <div id="particles"></div>
 
-<div class="auth-background">
-    <div class="auth-orb orb-one"></div>
-    <div class="auth-orb orb-two"></div>
-</div>
-
 <main class="auth-wrapper">
 
-    <section class="auth-card">
+    <div class="auth-card">
 
         <div class="auth-brand">
             SOCIAL<span>TOXIC</span>
@@ -32,18 +27,16 @@
 
         <!-- LOGIN -->
 
-        <div id="loginPanel" class="auth-panel active">
+        <section id="loginPanel" class="auth-panel active">
 
             <span class="eyebrow">
                 WELCOME BACK
             </span>
 
-            <h1>
-                LOGIN
-            </h1>
+            <h1>LOGIN</h1>
 
             <p class="auth-description">
-                Enter your digital world.
+                Enter your Social Toxic account.
             </p>
 
             <form id="loginForm">
@@ -54,7 +47,6 @@
                     id="loginEmail"
                     type="email"
                     placeholder="you@example.com"
-                    autocomplete="email"
                     required
                 >
 
@@ -65,8 +57,7 @@
                     <input
                         id="loginPassword"
                         type="password"
-                        placeholder="Your password"
-                        autocomplete="current-password"
+                        placeholder="Password"
                         required
                     >
 
@@ -92,6 +83,7 @@
             </form>
 
             <div class="auth-switch">
+
                 Don't have an account?
 
                 <button
@@ -99,21 +91,21 @@
                     onclick="showSignup()">
                     SIGN UP
                 </button>
+
             </div>
 
-        </div>
+        </section>
+
 
         <!-- SIGN UP -->
 
-        <div id="signupPanel" class="auth-panel">
+        <section id="signupPanel" class="auth-panel">
 
             <span class="eyebrow">
-                JOIN THE NETWORK
+                JOIN SOCIAL TOXIC
             </span>
 
-            <h1>
-                SIGN UP
-            </h1>
+            <h1>SIGN UP</h1>
 
             <p class="auth-description">
                 Create your digital identity.
@@ -129,7 +121,6 @@
                     placeholder="your_username"
                     minlength="3"
                     maxlength="20"
-                    autocomplete="username"
                     required
                 >
 
@@ -139,7 +130,6 @@
                     id="signupEmail"
                     type="email"
                     placeholder="you@example.com"
-                    autocomplete="email"
                     required
                 >
 
@@ -152,7 +142,6 @@
                         type="password"
                         placeholder="Minimum 6 characters"
                         minlength="6"
-                        autocomplete="new-password"
                         required
                     >
 
@@ -164,41 +153,41 @@
 
                 </div>
 
+
                 <label>Choose Avatar</label>
 
-                <div
-                    id="avatarChoices"
-                    class="avatar-choices">
+                <div class="avatar-choices">
 
                     <button
                         type="button"
                         class="avatar-choice selected"
-                        data-avatar="cyber">
-                        <span class="avatar-image avatar-cyber">ST</span>
+                        data-avatar="ST">
+                        ST
                     </button>
 
                     <button
                         type="button"
                         class="avatar-choice"
-                        data-avatar="neon">
-                        <span class="avatar-image avatar-neon">NX</span>
+                        data-avatar="NX">
+                        NX
                     </button>
 
                     <button
                         type="button"
                         class="avatar-choice"
-                        data-avatar="space">
-                        <span class="avatar-image avatar-space">SP</span>
+                        data-avatar="SP">
+                        SP
                     </button>
 
                     <button
                         type="button"
                         class="avatar-choice"
-                        data-avatar="toxic">
-                        <span class="avatar-image avatar-toxic">TX</span>
+                        data-avatar="TX">
+                        TX
                     </button>
 
                 </div>
+
 
                 <button
                     type="submit"
@@ -213,7 +202,9 @@
 
             </form>
 
+
             <div class="auth-switch">
+
                 Already have an account?
 
                 <button
@@ -221,11 +212,12 @@
                     onclick="showLogin()">
                     LOGIN
                 </button>
+
             </div>
 
-        </div>
+        </section>
 
-    </section>
+    </div>
 
 </main>
 
