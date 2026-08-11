@@ -1,86 +1,237 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Social Toxic | Profile</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Profile | Social Toxic</title>
+<link rel="stylesheet" href="style.css">
 </head>
+
 <body>
+
+<div id="particles"></div>
 
 <header>
     <a href="index.html" class="logo">SOCIAL<span>TOXIC</span></a>
 
     <nav>
-        <a href="index.html">Home</a>
-        <a href="trending.html">Trending</a>
-        <a href="community.html">Community</a>
-        <a href="profile.html" class="active">Profile</a>
+        <a href="index.html">HOME</a>
+        <a href="trending.html">TRENDING</a>
+        <a href="community.html">COMMUNITY</a>
+        <a class="active" href="profile.html">PROFILE</a>
     </nav>
 
-    <button class="menu-btn">☰</button>
+    <div class="nav-right">
+        <span id="navUser"></span>
+        <button class="menu-btn">☰</button>
+    </div>
 </header>
 
-<main class="page">
+<main class="page-transition">
 
-<section class="profile">
+<section class="profile-container">
 
-    <div class="profile-avatar">
-        <div>ST</div>
-    </div>
+    <div class="profile-card tilt">
 
-    <p class="small-title">DIGITAL IDENTITY</p>
-
-    <h1>YOUR<br><span>PROFILE</span></h1>
-
-    <p class="username">@social_user</p>
-
-    <p class="bio">
-        Exploring the digital world one idea at a time.
-    </p>
-
-    <div class="stats">
-        <div>
-            <strong>128</strong>
-            <span>Posts</span>
+        <div id="profileAvatar" class="profile-avatar">
+            ST
         </div>
 
-        <div>
-            <strong>4.8K</strong>
-            <span>Followers</span>
+        <span class="eyebrow">
+            DIGITAL IDENTITY
+        </span>
+
+        <h1 id="profileName">
+            Guest
+        </h1>
+
+        <div id="profileUsername" class="username">
+            @guest
         </div>
 
-        <div>
-            <strong>892</strong>
-            <span>Following</span>
+        <p id="profileBio">
+            Welcome to Social Toxic.
+        </p>
+
+        <div class="profile-stats">
+
+            <div>
+                <strong id="profilePosts">0</strong>
+                <span>POSTS</span>
+            </div>
+
+            <div>
+                <strong>4.8K</strong>
+                <span>FOLLOWERS</span>
+            </div>
+
+            <div>
+                <strong>892</strong>
+                <span>FOLLOWING</span>
+            </div>
+
         </div>
-    </div>
 
-    <button class="btn primary">EDIT PROFILE</button>
+        <div class="profile-buttons">
 
-</section>
+            <button
+                class="btn primary"
+                onclick="openEditProfile()">
+                EDIT PROFILE
+            </button>
 
-<section class="profile-posts">
+            <button
+                class="btn"
+                onclick="openSettings()">
+                SETTINGS
+            </button>
 
-    <h2>YOUR <span>ACTIVITY</span></h2>
+            <button
+                class="btn danger"
+                onclick="logout()">
+                LOGOUT
+            </button>
 
-    <div class="post-grid">
-        <div class="post">01</div>
-        <div class="post">02</div>
-        <div class="post">03</div>
-        <div class="post">04</div>
-        <div class="post">05</div>
-        <div class="post">06</div>
+        </div>
+
     </div>
 
 </section>
 
 </main>
 
+<!-- EDIT PROFILE MODAL -->
+
+<div id="editModal" class="modal">
+
+    <div class="modal-box">
+
+        <button
+            class="close"
+            onclick="closeModal('editModal')">
+            ×
+        </button>
+
+        <h2>EDIT <span>PROFILE</span></h2>
+
+        <label>Display Name</label>
+
+        <input
+            id="editName"
+            type="text"
+            placeholder="Your name"
+        >
+
+        <label>Username</label>
+
+        <input
+            id="editUsername"
+            type="text"
+            placeholder="username"
+        >
+
+        <label>Bio</label>
+
+        <textarea
+            id="editBio"
+            placeholder="Write something about yourself">
+        </textarea>
+
+        <label>Avatar Letter</label>
+
+        <input
+            id="editAvatar"
+            maxlength="2"
+            type="text"
+            placeholder="ST"
+        >
+
+        <button
+            class="btn primary full"
+            onclick="saveProfile()">
+            SAVE CHANGES
+        </button>
+
+    </div>
+
+</div>
+
+<!-- SETTINGS MODAL -->
+
+<div id="settingsModal" class="modal">
+
+    <div class="modal-box">
+
+        <button
+            class="close"
+            onclick="closeModal('settingsModal')">
+            ×
+        </button>
+
+        <h2>PROFILE <span>SETTINGS</span></h2>
+
+        <div class="setting-row">
+
+            <div>
+                <strong>Neon Effects</strong>
+                <small>Enable extra visual effects</small>
+            </div>
+
+            <input
+                id="neonToggle"
+                type="checkbox"
+                checked
+                onchange="toggleNeon()"
+            >
+
+        </div>
+
+        <div class="setting-row">
+
+            <div>
+                <strong>3D Effects</strong>
+                <small>Enable 3D movement</small>
+            </div>
+
+            <input
+                id="threeToggle"
+                type="checkbox"
+                checked
+                onchange="toggle3D()"
+            >
+
+        </div>
+
+        <div class="setting-row">
+
+            <div>
+                <strong>Notifications</strong>
+                <small>Show website notifications</small>
+            </div>
+
+            <input
+                id="notificationToggle"
+                type="checkbox"
+                checked
+            >
+
+        </div>
+
+        <button
+            class="btn danger full"
+            onclick="resetAccount()">
+            RESET LOCAL DATA
+        </button>
+
+    </div>
+
+</div>
+
 <footer>
-    <p>© 2026 SOCIAL TOXIC</p>
+    <span>© 2026 SOCIAL TOXIC</span>
 </footer>
 
 <script src="script.js"></script>
+
 </body>
 </html>
