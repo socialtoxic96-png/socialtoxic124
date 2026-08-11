@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TOXIC // Social</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --toxic: #a8ff00;
+    --green: #39ff14;
+    --dark: #050805;
+    --card: rgba(10, 20, 10, 0.72);
+}
+
+body {
+    min-height: 100vh;
+    overflow-x: hidden;
+    background:
+        radial-gradient(circle at 50% 40%, #193300 0%, #071000 35%, #020302 75%);
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Animated toxic background */
+body::before {
+    content: "";
+    position: fixed;
+    inset: -50%;
+    z-index: -3;
+    background:
+        repeating-radial-gradient(
+            circle,
+            transparent 0 80px,
+            rgba(168,255,0,.04) 82px 84px
+        );
+    animation: rotateBG 25s linear infinite;
+}
+
+@keyframes rotateBG {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Grid */
+.grid {
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    background-image:
+        linear-gradient(rgba(168,255,0,.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(168,255,0,.06) 1px, transparent 1px);
+    background-size: 50px 50px;
+    transform: perspective(500px) rotateX(60deg) scale(2);
+    transform-origin: bottom;
+    animation: gridMove 8s linear infinite;
+}
+
+@keyframes gridMove {
+    from {
+        background-position: 0 0;
+    }
+    to {
+        background-position: 0 50px;
+    }
+}
+
+/* Navbar */
+nav {
+    height: 80px;
+    padding: 0 7%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    z-index: 10;
+}
+
+.logo {
+    font-size: 27px;
+    font-weight: 900;
+    letter-spacing: 4px;
+    color: var(--toxic);
+    text-shadow:
+        0 0 5px var(--toxic),
+        0 0 20px var(--green),
+        0 0 50px var(--green);
+}
+
+.nav-links {
+    display: flex;
+    gap: 30px;
+}
+
+.nav-links a {
+    color: #b9c9b2;
+    text-decoration: none;
+    transition: .3s;
+}
+
+.nav-links a:hover {
+    color: var(--toxic);
+    text-shadow: 0 0 15px var(--green);
+}
+
+/* Main */
+main {
+    min-height: calc(100vh - 80px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 7%;
+    perspective: 1500px;
+}
+
+.scene {
+    width: min(1100px, 100%);
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform .15s ease-out;
+}
+
+/* Hero */
+.hero {
+    text-align: center;
+    position: relative;
+    z-index: 5;
+}
+
+.badge {
+    display: inline-block;
+    border: 1px solid var(--toxic);
+    color: var(--toxic);
+    padding: 8px 18px;
+    border-radius: 30px;
+    font-size: 12px;
+    letter-spacing: 3px;
+    box-shadow: 0 0 20px rgba(168,255,0,.3);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    50% {
+        box-shadow: 0 0 45px rgba(168,255,0,.7);
+    }
+}
+
+h1 {
+    margin-top: 25px;
+    font-size: clamp(60px, 11vw, 145px);
+    line-height: .8;
+    font-weight: 1000;
+    letter-spacing: -8px;
+    color: #eaffd0;
+    text-shadow:
+        4px 4px 0 #314d00,
+        0 0 15px var(--toxic),
+        0 0 50px var(--green),
+        0 0 100px rgba(57,255,20,.5);
+}
+
+.subtitle {
+    margin: 30px auto;
+    max-width: 600px;
+    color: #9aaa94;
+    font-size: 16px;
+}
+
+/* Social cards */
+.socials {
+    margin-top: 60px;
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    flex-wrap: wrap;
+    transform-style: preserve-3d;
+}
+
+.card {
+    width: 230px;
+    height: 270px;
+    padding: 25px;
+    border-radius: 25px;
+    background: linear-gradient(
+        145deg,
+        rgba(40,70,20,.65),
+        rgba(3,8,3,.8)
+    );
+    border: 1px solid rgba(168,255,0,.4);
+    backdrop-filter: blur(12px);
+    box-shadow:
+        inset 0 0 30px rgba(168,255,0,.04),
+        0 15px 50px rgba(0,0,0,.7),
+        0 0 20px rgba(168,255,0,.12);
+    transform-style: preserve-3d;
+    transition: .5s cubic-bezier(.2,.8,.2,1);
+    position: relative;
+    overflow: hidden;
+}
+
+.card::before {
+    content: "";
+    position: absolute;
+    width: 120px;
+    height: 120px;
+    background: var(--toxic);
+    filter: blur(70px);
+    opacity: .12;
+    top: -40px;
+    right: -30px;
+}
+
+.card:hover {
+    transform:
+        translateY(-25px)
+        rotateX(10deg)
+        rotateY(-8deg)
+        translateZ(70px);
+    border-color: var(--toxic);
+    box-shadow:
+        0 30px 80px rgba(0,0,0,.8),
+        0 0 40px rgba(168,255,0,.35);
+}
+
+.icon {
+    width: 65px;
+    height: 65px;
+    display: grid;
+    place-items: center;
+    border-radius: 18px;
+    background: #101d0b;
+    border: 1px solid rgba(168,255,0,.5);
+    color: var(--toxic);
+    font-size: 30px;
+    box-shadow: 0 0 25px rgba(168,255,0,.2);
+    transform: translateZ(50px);
+}
+
+.card h2 {
+    margin-top: 30px;
+    font-size: 21px;
+    transform: translateZ(35px);
+}
+
+.card p {
+    color: #7e9079;
+    font-size: 13px;
+    margin-top: 10px;
+    line-height: 1.6;
+    transform: translateZ(25px);
+}
+
+.follow {
+    display: inline-block;
+    margin-top: 18px;
+    color: var(--toxic);
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-decoration: none;
+    transform: translateZ(30px);
+}
+
+/* Floating toxic objects */
+.orb {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    transform-style: preserve-3d;
+}
+
+.orb.one {
+    width: 120px;
+    height: 120px;
+    left: 2%;
+    top: 10%;
+    background: radial-gradient(circle at 30% 25%, #dfff8b, #72b800 30%, #102400 70%);
+    box-shadow:
+        0 0 30px var(--toxic),
+        0 0 100px rgba(168,255,0,.5);
+    animation: float1 5s ease-in-out infinite;
+}
+
+.orb.two {
+    width: 60px;
+    height: 60px;
+    right: 8%;
+    top: 15%;
+    background: var(--green);
+    box-shadow: 0 0 50px var(--green);
+    animation: float2 4s ease-in-out infinite;
+}
+
+.orb.three {
+    width: 35px;
+    height: 35px;
+    left: 15%;
+    bottom: 15%;
+    background: #b7ff00;
+    box-shadow: 0 0 35px #b7ff00;
+    animation: float2 6s ease-in-out infinite reverse;
+}
+
+@keyframes float1 {
+    0%,100% {
+        transform: translate3d(0,0,80px) rotate(0);
+    }
+    50% {
+        transform: translate3d(30px,-40px,160px) rotate(180deg);
+    }
+}
+
+@keyframes float2 {
+    0%,100% {
+        transform: translate3d(0,0,100px);
+    }
+    50% {
+        transform: translate3d(-40px,30px,180px);
+    }
+}
+
+/* Toxic particles */
+.particle {
+    position: fixed;
+    width: 3px;
+    height: 3px;
+    background: var(--toxic);
+    border-radius: 50%;
+    box-shadow: 0 0 10px var(--toxic);
+    animation: rise linear infinite;
+    z-index: -1;
+}
+
+@keyframes rise {
+    from {
+        transform: translateY(110vh);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    to {
+        transform: translateY(-10vh);
+        opacity: 0;
+    }
+}
+
+/* Bottom status */
+.status {
+    margin-top: 35px;
+    color: #61705c;
+    font-size: 11px;
+    letter-spacing: 3px;
+}
+
+.status span {
+    color: var(--toxic);
+}
+
+/* Mobile */
+@media(max-width: 700px) {
+    .nav-links {
+        display: none;
+    }
+
+    h1 {
+        letter-spacing: -4px;
+    }
+
+    .socials {
+        gap: 15px;
+    }
+
+    .card {
+        width: min(300px, 90vw);
+    }
+
+    .orb.one {
+        width: 70px;
+        height: 70px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="grid"></div>
+
+<nav>
+    <div class="logo">TOXIC.</div>
+
+    <div class="nav-links">
+        <a href="#">HOME</a>
+        <a href="#">EXPLORE</a>
+        <a href="#">TRENDING</a>
+        <a href="#">PROFILE</a>
+    </div>
+</nav>
+
+<main>
+
+    <div class="scene" id="scene">
+
+        <div class="orb one"></div>
+        <div class="orb two"></div>
+        <div class="orb three"></div>
+
+        <section class="hero">
+
+            <div class="badge">
+                ⚠ SYSTEM ONLINE
+            </div>
+
+            <h1>
+                TOXIC
+            </h1>
+
+            <p class="subtitle">
+                Enter the social network where chaos becomes culture.
+                Connect. Create. Destroy the boring internet.
+            </p>
+
+            <div class="socials">
+
+                <div class="card">
+                    <div class="icon">◎</div>
+                    <h2>VOID FEED</h2>
+                    <p>
+                        Dive into an endless stream of strange,
+                        chaotic and unforgettable content.
+                    </p>
+                    <a class="follow" href="#">
+                        ENTER →
+                    </a>
+                </div>
+
+                <div class="card">
+                    <div class="icon">✦</div>
+                    <h2>TOXIC CREW</h2>
+                    <p>
+                        Find people who live outside the
+                        algorithm and create their own reality.
+                    </p>
+                    <a class="follow" href="#">
+                        CONNECT →
+                    </a>
+                </div>
+
+                <div class="card">
+                    <div class="icon">◈</div>
+                    <h2>NEON TREND</h2>
+                    <p>
+                        Discover what is exploding across
+                        the underground social universe.
+                    </p>
+                    <a class="follow" href="#">
+                        EXPLORE →
+                    </a>
+                </div>
+
+            </div>
+
+            <div class="status">
+                USERS ONLINE:
+                <span>89,421</span>
+                &nbsp; // &nbsp;
+                SERVER:
+                <span>TOX-01</span>
+            </div>
+
+        </section>
+
+    </div>
+
+</main>
+
+<script>
+
+/* 3D mouse movement */
+const scene = document.getElementById("scene");
+
+document.addEventListener("mousemove", (e) => {
+
+    const x = (window.innerWidth / 2 - e.clientX) / 35;
+    const y = (window.innerHeight / 2 - e.clientY) / 35;
+
+    scene.style.transform =
+        `rotateX(${y}deg) rotateY(${-x}deg)`;
+
+});
+
+/* Reset 3D rotation */
+document.addEventListener("mouseleave", () => {
+    scene.style.transform = "rotateX(0deg) rotateY(0deg)";
+});
+
+/* Generate particles */
+for (let i = 0; i < 70; i++) {
+
+    const particle = document.createElement("div");
+
+    particle.className = "particle";
+
+    particle.style.left =
+        Math.random() * 100 + "vw";
+
+    particle.style.animationDuration =
+        (4 + Math.random() * 8) + "s";
+
+    particle.style.animationDelay =
+        Math.random() * 8 + "s";
+
+    particle.style.opacity =
+        Math.random();
+
+    document.body.appendChild(particle);
+}
+
+/* Extra 3D card tilt */
+document.querySelectorAll(".card").forEach(card => {
+
+    card.addEventListener("mousemove", e => {
+
+        const rect = card.getBoundingClientRect();
+
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        const rotateY =
+            ((x / rect.width) - .5) * 18;
+
+        const rotateX =
+            ((y / rect.height) - .5) * -18;
+
+        card.style.transform =
+            `translateY(-25px)
+             rotateX(${rotateX}deg)
+             rotateY(${rotateY}deg)
+             translateZ(70px)`;
+    });
+
+    card.addEventListener("mouseleave", () => {
+
+        card.style.transform =
+            `translateY(0)
+             rotateX(0)
+             rotateY(0)
+             translateZ(0)`;
+    });
+
+});
+
+</script>
+
+</body>
+</html>
