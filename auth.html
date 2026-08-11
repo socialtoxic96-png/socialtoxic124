@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Login | Social Toxic</title>
+
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body class="auth-page">
+
+<div id="particles"></div>
+
+<div class="auth-background">
+    <div class="auth-orb orb-one"></div>
+    <div class="auth-orb orb-two"></div>
+</div>
+
+<main class="auth-wrapper">
+
+    <section class="auth-card">
+
+        <div class="auth-brand">
+            SOCIAL<span>TOXIC</span>
+        </div>
+
+        <div class="auth-subtitle">
+            DIGITAL SOCIAL UNIVERSE
+        </div>
+
+        <!-- LOGIN -->
+
+        <div id="loginPanel" class="auth-panel active">
+
+            <span class="eyebrow">
+                WELCOME BACK
+            </span>
+
+            <h1>
+                LOGIN
+            </h1>
+
+            <p class="auth-description">
+                Enter your digital world.
+            </p>
+
+            <form id="loginForm">
+
+                <label>Email</label>
+
+                <input
+                    id="loginEmail"
+                    type="email"
+                    placeholder="you@example.com"
+                    autocomplete="email"
+                    required
+                >
+
+                <label>Password</label>
+
+                <div class="password-field">
+
+                    <input
+                        id="loginPassword"
+                        type="password"
+                        placeholder="Your password"
+                        autocomplete="current-password"
+                        required
+                    >
+
+                    <button
+                        type="button"
+                        onclick="togglePassword('loginPassword')">
+                        SHOW
+                    </button>
+
+                </div>
+
+                <button
+                    type="submit"
+                    class="btn primary auth-submit">
+                    LOGIN →
+                </button>
+
+                <div
+                    id="loginMessage"
+                    class="auth-message">
+                </div>
+
+            </form>
+
+            <div class="auth-switch">
+                Don't have an account?
+
+                <button
+                    type="button"
+                    onclick="showSignup()">
+                    SIGN UP
+                </button>
+            </div>
+
+        </div>
+
+        <!-- SIGN UP -->
+
+        <div id="signupPanel" class="auth-panel">
+
+            <span class="eyebrow">
+                JOIN THE NETWORK
+            </span>
+
+            <h1>
+                SIGN UP
+            </h1>
+
+            <p class="auth-description">
+                Create your digital identity.
+            </p>
+
+            <form id="signupForm">
+
+                <label>Username</label>
+
+                <input
+                    id="signupUsername"
+                    type="text"
+                    placeholder="your_username"
+                    minlength="3"
+                    maxlength="20"
+                    autocomplete="username"
+                    required
+                >
+
+                <label>Email</label>
+
+                <input
+                    id="signupEmail"
+                    type="email"
+                    placeholder="you@example.com"
+                    autocomplete="email"
+                    required
+                >
+
+                <label>Password</label>
+
+                <div class="password-field">
+
+                    <input
+                        id="signupPassword"
+                        type="password"
+                        placeholder="Minimum 6 characters"
+                        minlength="6"
+                        autocomplete="new-password"
+                        required
+                    >
+
+                    <button
+                        type="button"
+                        onclick="togglePassword('signupPassword')">
+                        SHOW
+                    </button>
+
+                </div>
+
+                <label>Choose Avatar</label>
+
+                <div
+                    id="avatarChoices"
+                    class="avatar-choices">
+
+                    <button
+                        type="button"
+                        class="avatar-choice selected"
+                        data-avatar="cyber">
+                        <span class="avatar-image avatar-cyber">ST</span>
+                    </button>
+
+                    <button
+                        type="button"
+                        class="avatar-choice"
+                        data-avatar="neon">
+                        <span class="avatar-image avatar-neon">NX</span>
+                    </button>
+
+                    <button
+                        type="button"
+                        class="avatar-choice"
+                        data-avatar="space">
+                        <span class="avatar-image avatar-space">SP</span>
+                    </button>
+
+                    <button
+                        type="button"
+                        class="avatar-choice"
+                        data-avatar="toxic">
+                        <span class="avatar-image avatar-toxic">TX</span>
+                    </button>
+
+                </div>
+
+                <button
+                    type="submit"
+                    class="btn primary auth-submit">
+                    CREATE ACCOUNT →
+                </button>
+
+                <div
+                    id="signupMessage"
+                    class="auth-message">
+                </div>
+
+            </form>
+
+            <div class="auth-switch">
+                Already have an account?
+
+                <button
+                    type="button"
+                    onclick="showLogin()">
+                    LOGIN
+                </button>
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+<script src="script.js"></script>
+
+</body>
+</html>
