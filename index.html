@@ -1,104 +1,181 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Social Toxic | Home</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Social Toxic</title>
+<link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-<div class="cursor"></div>
+<div id="loader">
+    <div class="loader-logo">SOCIAL<span>TOXIC</span></div>
+    <div class="loader-bar"></div>
+</div>
+
+<div id="particles"></div>
 
 <header>
     <a href="index.html" class="logo">SOCIAL<span>TOXIC</span></a>
 
     <nav>
-        <a href="index.html" class="active">Home</a>
-        <a href="trending.html">Trending</a>
-        <a href="community.html">Community</a>
-        <a href="profile.html">Profile</a>
+        <a class="active" href="index.html">HOME</a>
+        <a href="trending.html">TRENDING</a>
+        <a href="community.html">COMMUNITY</a>
+        <a href="profile.html">PROFILE</a>
     </nav>
 
-    <button class="menu-btn">☰</button>
+    <div class="nav-right">
+        <span id="navUser"></span>
+        <button class="menu-btn">☰</button>
+    </div>
 </header>
 
-<main>
+<main class="page-transition">
 
 <section class="hero">
-    <div class="hero-content">
-        <p class="small-title">WELCOME TO THE FUTURE</p>
+
+    <div class="hero-content parallax">
+
+        <div class="eyebrow">
+            ◉ DIGITAL SOCIAL UNIVERSE
+        </div>
 
         <h1>
             SOCIAL<br>
             <span>TOXIC</span>
         </h1>
 
-        <p class="description">
-            A futuristic social universe where people,
-            ideas and digital culture collide.
+        <p>
+            Connect. Create. Explore.
+            Enter a futuristic social network designed
+            for the next generation of creators.
         </p>
 
-        <div class="buttons">
-            <a href="community.html" class="btn primary">ENTER COMMUNITY</a>
-            <a href="trending.html" class="btn">EXPLORE</a>
-        </div>
-    </div>
+        <div class="hero-buttons">
 
-    <div class="scene">
-        <div class="cube">
-            <div class="face front">ST</div>
-            <div class="face back">TOXIC</div>
-            <div class="face right">SOCIAL</div>
-            <div class="face left">ST</div>
-            <div class="face top">∞</div>
-            <div class="face bottom">ST</div>
+            <a href="community.html" class="btn primary">
+                ENTER COMMUNITY
+            </a>
+
+            <a href="trending.html" class="btn">
+                EXPLORE TRENDING
+            </a>
+
         </div>
 
-        <div class="orb orb1"></div>
-        <div class="orb orb2"></div>
-        <div class="ring"></div>
     </div>
+
+    <div class="hero-3d">
+
+        <div class="planet">
+
+            <div class="planet-core">
+                ST
+            </div>
+
+            <div class="planet-ring ring-a"></div>
+            <div class="planet-ring ring-b"></div>
+            <div class="planet-ring ring-c"></div>
+
+        </div>
+
+        <div class="floating-cube">
+            <div class="cube-face cube-front">ST</div>
+            <div class="cube-face cube-back">01</div>
+            <div class="cube-face cube-left">SOCIAL</div>
+            <div class="cube-face cube-right">TOXIC</div>
+            <div class="cube-face cube-top">∞</div>
+            <div class="cube-face cube-bottom">ST</div>
+        </div>
+
+    </div>
+
 </section>
 
-<section class="scroll-section">
-    <p>SCROLL DOWN</p>
-    <div class="arrow">↓</div>
+<section class="stats-section">
+
+    <div class="stat">
+        <strong id="usersCount">0</strong>
+        <span>USERS</span>
+    </div>
+
+    <div class="stat">
+        <strong id="postsCount">0</strong>
+        <span>POSTS</span>
+    </div>
+
+    <div class="stat">
+        <strong>24/7</strong>
+        <span>NETWORK</span>
+    </div>
+
 </section>
 
-<section class="info-section">
-    <p class="small-title">ONE DIGITAL WORLD</p>
-    <h2>CONNECT.<br><span>CREATE.</span><br>EXPLORE.</h2>
+<section class="feature-section">
 
-    <div class="cards">
-        <div class="glass-card">
-            <div class="card-icon">◈</div>
-            <h3>Trending</h3>
-            <p>Discover what's exploding across the Social Toxic universe.</p>
-        </div>
-
-        <div class="glass-card">
-            <div class="card-icon">◎</div>
-            <h3>Community</h3>
-            <p>Meet people, share ideas and create your own digital identity.</p>
-        </div>
-
-        <div class="glass-card">
-            <div class="card-icon">✦</div>
-            <h3>Creative</h3>
-            <p>Turn your thoughts into something the world can discover.</p>
-        </div>
+    <div class="section-heading">
+        <span>01 / EXPERIENCE</span>
+        <h2>ENTER THE<br><b>UNIVERSE</b></h2>
     </div>
+
+    <div class="feature-grid">
+
+        <div class="feature-card tilt">
+            <div class="feature-number">01</div>
+            <div class="feature-icon">◈</div>
+            <h3>DISCOVER</h3>
+            <p>
+                Explore trending conversations and
+                discover new communities.
+            </p>
+        </div>
+
+        <div class="feature-card tilt">
+            <div class="feature-number">02</div>
+            <div class="feature-icon">◎</div>
+            <h3>CREATE</h3>
+            <p>
+                Share your ideas, thoughts and
+                creations with everyone.
+            </p>
+        </div>
+
+        <div class="feature-card tilt">
+            <div class="feature-number">03</div>
+            <div class="feature-icon">✦</div>
+            <h3>CONNECT</h3>
+            <p>
+                Build your digital identity and
+                connect with other users.
+            </p>
+        </div>
+
+    </div>
+
+</section>
+
+<section class="big-3d-section">
+
+    <div class="wire-sphere"></div>
+
+    <div class="big-text">
+        YOUR<br>
+        <span>DIGITAL</span><br>
+        IDENTITY
+    </div>
+
 </section>
 
 </main>
 
 <footer>
-    <p>© 2026 SOCIAL TOXIC</p>
+    <span>© 2026 SOCIAL TOXIC</span>
+    <span>BUILD YOUR DIGITAL WORLD</span>
 </footer>
 
 <script src="script.js"></script>
+
 </body>
 </html>
-
- 
