@@ -1,58 +1,94 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Social Toxic | Community</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Community | Social Toxic</title>
+<link rel="stylesheet" href="style.css">
 </head>
+
 <body>
+
+<div id="particles"></div>
 
 <header>
     <a href="index.html" class="logo">SOCIAL<span>TOXIC</span></a>
 
     <nav>
-        <a href="index.html">Home</a>
-        <a href="trending.html">Trending</a>
-        <a href="community.html" class="active">Community</a>
-        <a href="profile.html">Profile</a>
+        <a href="index.html">HOME</a>
+        <a href="trending.html">TRENDING</a>
+        <a class="active" href="community.html">COMMUNITY</a>
+        <a href="profile.html">PROFILE</a>
     </nav>
 
-    <button class="menu-btn">☰</button>
+    <div class="nav-right">
+        <span id="navUser"></span>
+        <button class="menu-btn">☰</button>
+    </div>
 </header>
 
-<main class="page">
+<main class="page-transition">
 
-<section class="page-title">
-    <p class="small-title">JOIN THE NETWORK</p>
-    <h1>OUR<br><span>COMMUNITY</span></h1>
-    <p>Build connections inside the Social Toxic universe.</p>
+<section class="page-hero">
+
+    <span class="eyebrow">SOCIAL NETWORK</span>
+
+    <h1>
+        THE<br>
+        <span>COMMUNITY</span>
+    </h1>
+
+    <p>
+        Share your thoughts with the Social Toxic universe.
+    </p>
+
 </section>
 
-<section class="community">
+<section class="community-layout">
 
-    <div class="community-card large">
-        <div class="avatar">ST</div>
-        <div>
-            <h2>Anonymous Creator</h2>
-            <p>
-                The future isn't something we wait for.
-                It's something we create.
-            </p>
+    <div>
 
-            <div class="post-actions">
-                <button>♡ 2.4K</button>
-                <button>💬 482</button>
-                <button>↗ SHARE</button>
+        <div class="create-box">
+
+            <div class="create-user">
+                <div id="createAvatar" class="mini-avatar">ST</div>
+
+                <strong id="createUsername">
+                    Guest
+                </strong>
             </div>
+
+            <textarea
+                id="postText"
+                placeholder="What's happening?"
+            ></textarea>
+
+            <div class="create-footer">
+
+                <span id="postStatus">
+                    Ready to post
+                </span>
+
+                <button
+                    class="btn primary"
+                    onclick="createPost()">
+                    POST
+                </button>
+
+            </div>
+
         </div>
+
+        <div id="postsContainer"></div>
+
     </div>
 
-    <div class="community-card">
+    <aside class="rooms">
+
         <h3>PUBLIC ROOMS</h3>
 
         <div class="room">
-            <span class="status"></span>
+            <span class="online"></span>
             <div>
                 <b>Gaming Zone</b>
                 <small>1,842 online</small>
@@ -60,7 +96,7 @@
         </div>
 
         <div class="room">
-            <span class="status"></span>
+            <span class="online"></span>
             <div>
                 <b>Technology</b>
                 <small>934 online</small>
@@ -68,28 +104,32 @@
         </div>
 
         <div class="room">
-            <span class="status"></span>
+            <span class="online"></span>
             <div>
                 <b>Creative Hub</b>
                 <small>721 online</small>
             </div>
         </div>
-    </div>
 
-</section>
+        <div class="room">
+            <span class="online"></span>
+            <div>
+                <b>Gaming Community</b>
+                <small>421 online</small>
+            </div>
+        </div>
 
-<section class="join">
-    <div class="join-orb"></div>
-    <h2>READY TO<br><span>JOIN?</span></h2>
-    <button class="btn primary" onclick="joinCommunity()">CREATE ACCOUNT</button>
+    </aside>
+
 </section>
 
 </main>
 
 <footer>
-    <p>© 2026 SOCIAL TOXIC</p>
+    <span>© 2026 SOCIAL TOXIC</span>
 </footer>
 
 <script src="script.js"></script>
+
 </body>
 </html>
